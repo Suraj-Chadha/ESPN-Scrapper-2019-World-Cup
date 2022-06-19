@@ -146,17 +146,38 @@ function creatFolders(teams){
         }
     }
 }
-function createScoreCard(teamName,match,matchFN){
+function createScoreCard(team1Name,match,matchFN){
     const PDFDocument = pdflib.PDFDocument;
     let templateInBytes = fs.readFileSync("template.pdf");
     let loadPDFDocPromise = PDFDocument.load(templateInBytes);
+
     loadPDFDocPromise.then(function(pdfDOC){
         let page = pdfDOC.getPage(0);
-        page.drawText("started");
+        page.drawText(team1Name,{
+            x: 320,
+            y: 630
+        })
+        page.drawText(match.vs,{
+            x: 320,
+            y: 595
+        })
+        page.drawText(match.selfScore,{
+            x: 320,
+            y: 560
+        })
+        page.drawText(match.oppScore,{
+            x: 320,
+            y: 525
+        })
+        page.drawText(match.result,{
+            x: 300,
+            y: 490,
+            size:10
+        })
 
         let givePdfBytesPromise = pdfDOC.save();
-        givePdfBytesPromise.then(function(newPDFByes){
-            fs.writeFileSync("test.pdf",newPDFByes);
+        givePdfBytesPromise.then(function(newPDFBytes){
+            fs.writeFileSync(matchFN,newPDFBytes);
         })
     })
 }

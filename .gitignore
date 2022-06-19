@@ -3,5 +3,5 @@ package-lock.json
 package.json
 teams.csv
 teams.xls
-*.pdf
 *.json
+template.pdf
